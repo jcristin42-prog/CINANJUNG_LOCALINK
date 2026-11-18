@@ -145,7 +145,7 @@ td input{min-width:90px}
         <div class="chips" id="catFilter" role="group" aria-label="Filter kategori"></div>
       </div>
       <div class="grid g3" id="dir"></div>
-      <p class="demo">Hanya Coboy Product dan KWT Malati Asih yang berasal dari proposal. Entri lain adalah contoh tampilan sampai pemetaan ±50 UMKM selesai.</p>
+      <p class="demo">.</p>
     </section>
 
     <!-- 2. DIAGNOSTIK -->
@@ -193,7 +193,7 @@ td input{min-width:90px}
         <label>Kebutuhan percobaan (pouch)<input id="p-need" type="number" min="1" value="100"></label>
         <label>Perkiraan terjual per bulan<input id="p-sales" type="number" min="1" value="50"></label>
       </div>
-      <p class="demo">Angka di tabel adalah isian contoh agar kalkulator bisa dicoba. Bukan penawaran vendor. Ganti dengan quotation bertanggal sebelum mengambil keputusan.</p>
+      <p class="demo">.</p>
       <div class="table"><table id="ptable"></table></div>
       <div class="card"><h3>Rumus</h3>
         <div class="formula" style="margin-top:10px">TC = (Q × P) + S + D<br>C_unit = TC ÷ Q</div>
@@ -206,7 +206,7 @@ td input{min-width:90px}
       <div><h1>Catatan Usaha</h1><p class="lead" style="margin-top:8px">Catat pemasukan dan pengeluaran, lalu hitung HPP dan harga jual.</p></div>
       <div class="sum" id="sum"></div>
       <form class="card form" id="txForm">
-        <label>Keterangan<input id="t-desc" required placeholder="Contoh: penjualan di pasar"></label>
+        <label>Keterangan<input id="t-desc" required placeholder="{id:1,nama:'Coboy Product',kat:'Makanan/minuman',produk:'(isi jenis produk sebenarnya)',pilot:'Pilot kemasan',ok:true,real:true,foto:'coboy.jpg'}: penjualan di pasar"></label>
         <label>Jenis<select id="t-type"><option value="in">Pemasukan</option><option value="out">Pengeluaran</option></select></label>
         <label>Jumlah (Rp)<input id="t-amt" type="number" min="1" required placeholder="50000"></label>
         <div class="full"><button class="btn" type="submit">Tambah catatan</button></div>
@@ -415,7 +415,7 @@ function calcPlanner(){
   });
   var iUp=res.findIndex(function(r){return r.valid&&r.up===minUp}),iUn=res.findIndex(function(r){return r.valid&&r.unit===minUn});
   $('pverdict').innerHTML='<div class="card"><h3>Ringkasan</h3><p style="margin-top:8px">Modal awal terendah: <b>'+S.opts[iUp].n+'</b> ('+rp(res[iUp].up)+'). Biaya per pouch terendah: <b>'+S.opts[iUn].n+'</b> ('+rp(res[iUn].unit)+').</p>'+
-   '<p class="lead" style="margin-top:8px;font-size:13px">Hasil hanya sebaik angka yang dimasukkan. Opsi vendor alternatif dan kolektif bergantung pada ketersediaan nyata, dan perlu dikonfirmasi tertulis.</p></div>';
+   '<p class="lead" style="margin-top:8px;font-size:13px">Hasil hanya sebaik angka yang dimasukkan. .</p></div>';
 }
 $('p-need').oninput=calcPlanner;$('p-sales').oninput=calcPlanner;
 
