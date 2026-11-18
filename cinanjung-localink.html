@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Cinanjung Localink</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
@@ -117,6 +120,84 @@ td input{min-width:90px}
   .hero{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  /* ===== TAMBAHAN: GERAK DAN ELEMEN MENGAMBANG ===== */
+[hidden]{display:none!important}
+:root{--on-leaf:#FFFFFF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--on-leaf:#0C1812}}
+:root[data-theme="dark"]{--on-leaf:#0C1812}
+.btn:not(.alt):not(.line){color:var(--on-leaf)}
+.hero .btn:not(.alt):not(.line){color:#0F3D2E}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(26px,-18px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes leaf{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(10px,-16px) rotate(10deg)}}
+@keyframes ring{0%{box-shadow:0 10px 24px -10px rgba(0,0,0,.45),0 0 0 0 rgba(46,139,74,.5)}100%{box-shadow:0 10px 24px -10px rgba(0,0,0,.45),0 0 0 18px rgba(46,139,74,0)}}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+
+/* layar dan kartu muncul bergantian */
+.view.on>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*60ms)}
+.grid>*{animation:pop .45s cubic-bezier(.2,.7,.2,1) backwards}
+.grid>*:nth-child(1){animation-delay:.08s}.grid>*:nth-child(2){animation-delay:.13s}.grid>*:nth-child(3){animation-delay:.18s}
+.grid>*:nth-child(4){animation-delay:.23s}.grid>*:nth-child(5){animation-delay:.28s}.grid>*:nth-child(6){animation-delay:.33s}
+.grid>*:nth-child(n+7){animation-delay:.38s}
+.msg{animation:pop .3s backwards}
+.bar i{transform-origin:left;animation:grow .9s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:.15s}
+.sum .card b{animation:pop .4s backwards}
+#katPane,#admPane{animation:rise .35s backwards}
+
+/* hover dan sentuhan */
+.card{transition:transform .2s ease-out,box-shadow .2s,border-color .2s}
+.umkm:hover{box-shadow:0 14px 28px -14px rgba(0,0,0,.4);border-color:var(--sage)}
+.btn{transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.97)}
+.chip{transition:background-color .2s,color .2s,border-color .2s,transform .15s}
+.chip:active{transform:scale(.96)}
+input,select,textarea{transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--leaf);box-shadow:0 0 0 3px var(--ok-bg)}
+nav svg{transition:transform .2s}
+nav a:hover svg{transform:scale(1.14)}
+tbody tr{transition:background-color .35s}
+
+/* kotak hijau beranda: bola warna, daun, kartu angka mengambang */
+.hero{position:relative;overflow:hidden}
+.hero>*:not(.leaf){position:relative;z-index:1}
+.hero::before,.hero::after{content:"";position:absolute;z-index:0;border-radius:50%;filter:blur(44px);opacity:.32;pointer-events:none;animation:drift 12s ease-in-out infinite}
+.hero::before{width:280px;height:280px;right:-60px;top:-80px;background:var(--leaf)}
+.hero::after{width:220px;height:220px;right:22%;bottom:-120px;background:var(--sage);animation-delay:-5s}
+.leaf{position:absolute;z-index:0;color:var(--sage);opacity:.55;pointer-events:none;animation:leaf 8s ease-in-out infinite}
+.leaf svg{display:block;width:100%;height:auto}
+.metric{backdrop-filter:blur(6px);animation:bob 5s ease-in-out infinite}
+.metric:nth-child(2){animation-delay:-1.6s}
+.metric:nth-child(3){animation-delay:-3.2s}
+
+/* bola warna melayang di latar seluruh halaman */
+.shell{position:relative;z-index:1}
+.bgfloat{position:fixed;z-index:0;border-radius:50%;filter:blur(70px);opacity:.25;pointer-events:none;animation:drift 16s ease-in-out infinite}
+.bgfloat.a{width:360px;height:360px;left:12%;top:8%;background:var(--sage)}
+.bgfloat.b{width:300px;height:300px;right:6%;bottom:6%;background:var(--leaf);animation-delay:-7s}
+
+/* garis progres scroll */
+#prog{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;width:0;background:var(--leaf);z-index:40;transition:width .1s}
+
+/* tombol mengambang */
+.fab{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:25;display:flex;align-items:center;gap:8px;background:var(--leaf);color:var(--on-leaf);border-radius:99px;padding:13px 18px;font-weight:600;text-decoration:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);animation:bob 4s ease-in-out infinite,ring 2.4s ease-out infinite}
+.fab:hover{filter:brightness(1.08)}
+.fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fab.off{display:none}
+@media (max-width:899px){.fab{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+
+/* titik mengetik di chat */
+.typing{display:flex;gap:5px;padding:14px 16px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+
+/* hormati pengguna yang mematikan animasi */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 
 <div class="shell">
@@ -372,7 +453,7 @@ function addMsg(cls,html,meta,go){
 function ask(q){
   if(!q.trim())return;
   addMsg('u',esc(q));
-  setTimeout(function(){var r=reply(q);addMsg('a',esc(r.text),r.meta,r.go)},450);
+  setTimeout(function(){var r=reply(q);addMsg('a',esc(r.text),r.meta,r.go)},900);
 }
 addMsg('a','Halo, saya Localink AI. Pilih contoh pertanyaan di atas atau tulis sendiri.');
 $('quick').querySelectorAll('button').forEach(function(b){b.onclick=function(){ask(b.textContent)}});
@@ -460,5 +541,113 @@ $('m-kat').onclick=function(){setMode('kat')};$('m-adm').onclick=function(){setM
 /* ---------- init ---------- */
 if(S.profile){try{$('d-nama').value=S.profile.nama;$('d-kat').value=S.profile.kat;$('d-produk').value=S.profile.produk;$('d-prod').value=S.profile.prod}catch(e){}}
 renderDir();renderProfile();renderDiag();buildPlanner();calcPlanner();renderTx();calcHpp();renderKat();renderKpi();route();
+})();
+</script>
+<script>
+(function () {
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(id) { return document.getElementById(id); }
+
+  // 1. Bola warna melayang di latar halaman
+  ['a', 'b'].forEach(function (k) {
+    var d = document.createElement('div');
+    d.className = 'bgfloat ' + k;
+    document.body.appendChild(d);
+  });
+
+  // 2. Garis progres scroll di atas
+  var bar = document.createElement('div');
+  bar.id = 'prog';
+  document.body.appendChild(bar);
+  addEventListener('scroll', function () {
+    var h = document.documentElement, m = h.scrollHeight - h.clientHeight;
+    bar.style.width = (m > 0 ? (h.scrollTop / m) * 100 : 0) + '%';
+  }, { passive: true });
+
+  // 3. Tombol mengambang "Tanya Localink AI"
+  var fab = document.createElement('a');
+  fab.className = 'fab';
+  fab.href = '#ai';
+  fab.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Tanya Localink AI';
+  document.body.appendChild(fab);
+
+  // 4. Daun melayang di kotak hijau beranda
+  function leaves() {
+    var hero = document.querySelector('.hero');
+    if (!hero || hero.querySelector('.leaf')) return;
+    [['right:8%;top:12%;width:54px', '0s'], ['right:26%;top:58%;width:34px', '-3s'], ['right:4%;bottom:10%;width:42px', '-5.5s']].forEach(function (c) {
+      var s = document.createElement('span');
+      s.className = 'leaf';
+      s.style.cssText = c[0] + ';animation-delay:' + c[1];
+      s.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4C9 4 4 9 4 17c0 1 .1 2 .3 3C6 14 9 11 14 9c-4 3-6 6-7 11 9 0 13-6 13-16z"/></svg>';
+      hero.appendChild(s);
+    });
+  }
+
+  // 5. Angka beranda berhitung naik
+  function countUp() {
+    document.querySelectorAll('.metric b').forEach(function (el) {
+      var m = (el.dataset.final || el.textContent).match(/^(\D*)(\d+)$/);
+      if (!m) return;
+      if (!el.dataset.final) el.dataset.final = el.textContent;
+      if (RM) return;
+      var pre = m[1], to = +m[2], t0 = performance.now(), d = 900;
+      (function f(t) {
+        var q = Math.min(1, (t - t0) / d);
+        el.textContent = pre + Math.round(to * (1 - Math.pow(1 - q, 3)));
+        if (q < 1) requestAnimationFrame(f);
+      })(t0);
+      setTimeout(function () { el.textContent = el.dataset.final; }, d + 200);
+    });
+  }
+
+  // 6. Urutan muncul kartu tiap pindah layar
+  function onRoute() {
+    var h = (location.hash || '#beranda').slice(1);
+    var v = $('v-' + h);
+    if (v) [].forEach.call(v.children, function (c, i) { c.style.setProperty('--i', i); });
+    fab.classList.toggle('off', h === 'ai');
+    if (h === 'beranda' || !v) countUp();
+  }
+  addEventListener('hashchange', onRoute);
+  leaves();
+  onRoute();
+
+  // 7. Titik "sedang mengetik" di chat AI
+  var chat = $('chat');
+  if (chat) {
+    new MutationObserver(function (list) {
+      list.forEach(function (r) {
+        [].forEach.call(r.addedNodes, function (n) {
+          if (!n.classList || n.classList.contains('typing')) return;
+          var old = chat.querySelector('.typing');
+          if (n.classList.contains('u')) {
+            if (old) old.remove();
+            var t = document.createElement('div');
+            t.className = 'msg a typing';
+            t.innerHTML = '<i></i><i></i><i></i>';
+            chat.appendChild(t);
+            chat.scrollTop = chat.scrollHeight;
+          } else if (n.classList.contains('a') && old) {
+            old.remove();
+          }
+        });
+      });
+    }).observe(chat, { childList: true });
+  }
+
+  // 8. Kartu UMKM miring mengikuti kursor (hanya di komputer)
+  if (!RM && matchMedia('(hover: hover)').matches) {
+    var last = null;
+    document.addEventListener('mousemove', function (e) {
+      var c = e.target.closest && e.target.closest('.umkm');
+      if (last && last !== c) { last.style.transform = ''; last = null; }
+      if (!c) return;
+      var r = c.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      c.style.transform = 'perspective(700px) rotateY(' + x * 8 + 'deg) rotateX(' + -y * 8 + 'deg) translateY(-3px)';
+      last = c;
+    });
+  }
 })();
 </script>
